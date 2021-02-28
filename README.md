@@ -1,13 +1,13 @@
-# Python Elmax client
+# Python Elmax Cloud client
 
-Asynchronous Python API client for interacting with the Elmax Clous services.
+Asynchronous Python API client for interacting with the Elmax Cloud services.
 
 This module is not official, developed, supported or endorsed by Elmax.
 For questions and other inquiries, use the issue tracker in this repo please.
 
 ## Installation
 
-The package is available in the [Python Package Index](<https://pypi.python.org/).
+The package is available in the [Python Package Index](https://pypi.python.org/).
 
 ```bash
 $ pip3 install elmax --user
