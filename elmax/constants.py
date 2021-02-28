@@ -1,6 +1,6 @@
 """Constants for the Elmax Cloud service client."""
 
-BASE_URL = "cloud.elmaxsrl.it"
+BASE_URL = "https://cloud.elmaxsrl.it"
 
 ENDPOINT_DEVICES = "api/ext/devices"
 ENDPOINT_LOGIN = "api/ext/login"
