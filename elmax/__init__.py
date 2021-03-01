@@ -5,6 +5,8 @@ import logging
 import httpx
 import json
 
+from . import exceptions
+
 from .constants import (
     BASE_URL,
     ENDPOINT_DEVICES,
@@ -52,11 +54,12 @@ class Elmax(object):
             "username": self.username,
             "password": self.password,
         }
-
-        async with httpx.AsyncClient() as client:
-            response = await client.post(str(url), headers=headers, data=data)
-
-        _LOGGER.debug("Status code:", response.status_code)
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.post(str(url), headers=headers, data=data)
+                _LOGGER.debug("Status code:", response.status_code)
+        except httpx.ConnectError:
+            raise exceptions.ElmaxConnectionError(f"Connection to {BASE_URL} failed")
 
         try:
             response_data = response.json()
@@ -80,7 +83,7 @@ class Elmax(object):
     async def get_devices(self):
         """Retrieve the devices."""
         if self.authorized is False:
-            self.connect()
+            await self.connect()
 
         url = URL(BASE_URL) / ENDPOINT_DEVICES
         headers["Authorization"] = self.authorization
@@ -109,7 +112,7 @@ class Elmax(object):
     async def get_units(self, device_id, pin):
         """List all units of a devices."""
         if self.authorized is False:
-            self.connect()
+            await self.connect()
 
         url = URL(BASE_URL) / ENDPOINT_DISCOVERY / device_id / str(pin)
 
