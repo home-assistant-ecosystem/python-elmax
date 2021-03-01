@@ -72,7 +72,8 @@ class Elmax(object):
         if self.authorized:
             self.authorized = False
 
-    async def is_authenticated(self):
+    @property
+    def is_authenticated(self):
         """Get the state of the authentication."""
         return self.authorized
 
