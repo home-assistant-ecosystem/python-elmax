@@ -72,6 +72,10 @@ class Elmax(object):
         if self.authorized:
             self.authorized = False
 
+    async def is_authenticated(self):
+        """Get the state of the authentication."""
+        return self.authorized
+
     async def get_devices(self):
         """Retrieve the devices."""
         if self.authorized is False:
