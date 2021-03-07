@@ -68,7 +68,7 @@ class Elmax(object):
         # The API doesn't respond with 401 but there will be no JSON
         except json.decoder.JSONDecodeError:
             self.authorized = False
-            _LOGGER.error("Credentials are not valid")
+            raise exceptions.ElmaxConnectionError("Credentials are not valid")
 
     async def disconnect(self):
         """Terminate the connection to the API."""
