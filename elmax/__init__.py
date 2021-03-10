@@ -66,7 +66,7 @@ class Elmax(object):
             self.authorization = response_data["token"]
             self.authorized = True
         # The API doesn't respond with 401 but there will be no JSON
-        except json.decoder.JSONDecodeError:
+        except (json.decoder.JSONDecodeError, TypeError, KeyError):
             self.authorized = False
             raise exceptions.ElmaxConnectionError("Credentials are not valid")
 
@@ -134,12 +134,12 @@ class Elmax(object):
 
         return control_panels_list
 
-    async def get_endpoints(self, device_id, pin):
+    async def get_endpoints(self, control_panel_id, pin):
         """List all endpoints of a control panel."""
         if self.authorized is False:
             await self.connect()
 
-        url = URL(BASE_URL) / ENDPOINT_DISCOVERY / device_id / str(pin)
+        url = URL(BASE_URL) / ENDPOINT_DISCOVERY / control_panel_id / str(pin)
 
         headers["Authorization"] = self.authorization
 
@@ -155,12 +155,12 @@ class Elmax(object):
         if response_data[AREA]:
             self._areas = response_data[AREA]
 
-    async def get_status(self, entity_id):
+    async def get_status(self, endpoint_id):
         """Get the status of an endpoint."""
         if self.authorized is False:
             self.connect()
 
-        url = URL(BASE_URL) / ENDPOINT_STATUS_ENTITY_ID / entity_id
+        url = URL(BASE_URL) / ENDPOINT_STATUS_ENTITY_ID / endpoint_id
 
         headers["Authorization"] = self.authorization
 
