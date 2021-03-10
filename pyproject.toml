@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "elmax"
 version = "0.1.1"
-description = "Python client for the Elmax CLoud"
+description = "Python client for the Elmax Cloud services"
 
 license = "Apache-2.0"
 authors = ["Fabian Affolter <fabian@affolter-engineering.ch>"]
