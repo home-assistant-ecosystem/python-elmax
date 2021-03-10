@@ -35,15 +35,15 @@ class Elmax(object):
         self,
         username: str = None,
         password: str = None,
-        device_id: str = None,
+        control_panel_id: str = None,
     ):
         """Initialize the connection."""
         self.username = username
         self.password = password
-        self.devices = None
+        self.control_panel_id = control_panel_id
         self.authorized = False
         self.authorization = None
-        self.areas = self.outputs = self.zones = {}
+        self._areas = self._outputs = self._zones = []
 
         self.registry = DeviceRegistry()
 
@@ -80,8 +80,33 @@ class Elmax(object):
         """Get the state of the authentication."""
         return self.authorized
 
-    async def get_devices(self):
-        """Retrieve the devices."""
+    @property
+    def control_panels(self):
+        """Get the control panels."""
+        return self.list_control_panels()
+
+    @property
+    def endpoints(self):
+        """Get the endpoints."""
+        raise NotImplemented
+
+    @property
+    def zones(self):
+        """Get the zones."""
+        return self._zones
+    
+    @property
+    def outputs(self):
+        """Get the outputs."""
+        return self._outputs
+    
+    @property
+    def areas(self):
+        """Get the areas."""
+        return self._areas
+
+    async def get_control_panels(self):
+        """Retrieve the present control panels."""
         if self.authorized is False:
             await self.connect()
 
@@ -94,23 +119,23 @@ class Elmax(object):
         _LOGGER.debug("Status code:", response.status_code)
 
         for response_entry in response.json():
-            device = AvailableDevice.create_new_device(response_entry)
-            self.registry.register(device)
+            control_panel = AvailableControlPanel.create_new_control_panel(response_entry)
+            self.registry.register(control_panel)
 
-    async def list_devices(self):
-        """List all available devices."""
-        await self.get_devices()
+    async def list_control_panels(self):
+        """List all available control panels."""
+        await self.get_control_panels()
 
-        device_list = []
-        for device in self.registry.devices():
-            device_list.append(
-                {"online": device.online, "hash": device.hash, "name": device.name}
+        control_panels_list = []
+        for control_panel in self.registry.devices():
+            control_panels_list.append(
+                {"online": control_panel.online, "hash": control_panel.hash, "name": control_panel.name}
             )
 
-        return device_list
+        return control_panels_list
 
-    async def get_units(self, device_id, pin):
-        """List all units of a devices."""
+    async def get_endpoints(self, device_id, pin):
+        """List all endpoints of a control panel."""
         if self.authorized is False:
             await self.connect()
 
@@ -124,14 +149,14 @@ class Elmax(object):
         response_data = response.json()
 
         if response_data[ZONE]:
-            self.zones = response_data[ZONE]
+            self._zones = response_data[ZONE]
         if response_data[OUTPUT]:
-            self.outputs = response_data[OUTPUT]
+            self._outputs = response_data[OUTPUT]
         if response_data[AREA]:
-            self.areas = response_data[AREA]
+            self._areas = response_data[AREA]
 
     async def get_status(self, entity_id):
-        """Get the status of an unit."""
+        """Get the status of an endpoint."""
         if self.authorized is False:
             self.connect()
 
@@ -142,28 +167,27 @@ class Elmax(object):
         async with httpx.AsyncClient() as client:
             response = await client.get(str(url), headers=headers)
 
-        return response.json()["zone"][0]
+        return response.json()
 
 
-class AvailableDevice:
-    """Representation of an available device."""
+class AvailableControlPanel:
+    """Representation of an available control panel."""
 
     def __init__(self, hash, online, name):
-        """Initialize the new device."""
+        """Initialize the new control panel."""
         self.hash = hash
         self.online = online
         self.name = name
 
     @staticmethod
-    def create_new_device(response_entry):
-        """Create a new device."""
-        device = AvailableDevice(
+    def create_new_control_panel(response_entry):
+        """Create a new control panel."""
+        control_panel = AvailableControlPanel(
             hash=response_entry["hash"],
             online=bool(response_entry["centrale_online"]),
             name=response_entry["username"][0]["label"],
         )
-        return device
-
+        return control_panel
 
 class DeviceRegistry(object):
     """Representation of the devices registry."""
