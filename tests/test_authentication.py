@@ -13,6 +13,7 @@ RESPONSE_AUTHENTICATION_INVALID = {
     "user": {"_id": "1234567", "email": "user@elmax-cloud.test", "role": "user"},
 }
 
+
 @pytest.mark.asyncio
 async def test_authentication_valid(httpx_mock: HTTPXMock):
     """Test a valid authentication process."""
@@ -32,8 +33,8 @@ async def test_authentication_not_json(httpx_mock: HTTPXMock):
     with pytest.raises(exceptions.ElmaxConnectionError) as execinfo:
         client = Elmax(username="username", password="password")
         await client.connect()
-    
-    assert execinfo.value.args[0] == 'Credentials are not valid'
+
+    assert execinfo.value.args[0] == "Credentials are not valid"
     assert client.is_authenticated is False
 
 
@@ -45,6 +46,6 @@ async def test_authentication_incomplete(httpx_mock: HTTPXMock):
     with pytest.raises(exceptions.ElmaxConnectionError) as execinfo:
         client = Elmax(username="username", password="password")
         await client.connect()
-    
-    assert execinfo.value.args[0] == 'Credentials are not valid'
+
+    assert execinfo.value.args[0] == "Credentials are not valid"
     assert client.is_authenticated is False
