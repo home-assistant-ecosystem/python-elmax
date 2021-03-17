@@ -88,7 +88,7 @@ class Elmax(object):
     @property
     def endpoints(self):
         """Get the endpoints."""
-        raise NotImplemented
+        raise NotImplementedError
 
     @property
     def zones(self):
