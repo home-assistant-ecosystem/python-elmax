@@ -93,12 +93,12 @@ class Elmax(object):
     def zones(self):
         """Get the zones."""
         return self._zones
-    
+
     @property
     def outputs(self):
         """Get the outputs."""
         return self._outputs
-    
+
     @property
     def areas(self):
         """Get the areas."""
@@ -118,7 +118,9 @@ class Elmax(object):
         _LOGGER.debug("Status code:", response.status_code)
 
         for response_entry in response.json():
-            control_panel = AvailableControlPanel.create_new_control_panel(response_entry)
+            control_panel = AvailableControlPanel.create_new_control_panel(
+                response_entry
+            )
             self.registry.register(control_panel)
 
     async def list_control_panels(self):
@@ -128,7 +130,11 @@ class Elmax(object):
         control_panels_list = []
         for control_panel in self.registry.devices():
             control_panels_list.append(
-                {"online": control_panel.online, "hash": control_panel.hash, "name": control_panel.name}
+                {
+                    "online": control_panel.online,
+                    "hash": control_panel.hash,
+                    "name": control_panel.name,
+                }
             )
 
         return control_panels_list
@@ -187,6 +193,7 @@ class AvailableControlPanel:
             name=response_entry["username"][0]["label"],
         )
         return control_panel
+
 
 class DeviceRegistry(object):
     """Representation of the devices registry."""
