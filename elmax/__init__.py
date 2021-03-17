@@ -1,6 +1,5 @@
 """Client for the Elmax Cloud services."""
 from yarl import URL
-import asyncio
 import logging
 import httpx
 import json
