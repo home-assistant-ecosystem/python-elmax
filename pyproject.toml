@@ -28,7 +28,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7.0"
-httpx = "^0.17"
+httpx = "^0.18"
 yarl = "^1.6"
 
 [tool.poetry.dev-dependencies]
