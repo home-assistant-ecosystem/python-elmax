@@ -27,8 +27,8 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8.0"
-httpx = "^0.20"
-yarl = "^1.7"
+httpx = ">=0.20,<1"
+yarl = ">=1.7,<2"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.8.1"
