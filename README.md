@@ -17,7 +17,7 @@ For Nix or NixOS users is a package available. Keep in mind that the lastest
 releases might only be present in the `unstable` channel.
 
 ```bash
-$ nix-env -iA nixos.python38Packages.elmax
+$ nix-env -iA nixos.python10Packages.elmax
 ```
 
 ## Usage
