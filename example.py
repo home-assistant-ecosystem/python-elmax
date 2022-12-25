@@ -9,6 +9,7 @@ PASSWORD = "password"
 PIN = "000000"
 CONTROL_PANEL = "7e67sadfe35fgsdfg445d68b4fd4105d1be44d"
 
+
 async def main():
     """The main part of the example script."""
 
@@ -33,7 +34,7 @@ async def main():
             print("Device ID:    ", control_panel["hash"])
             print("Device name:  ", control_panel["name"])
             print()
-    
+
     print()
 
     # Limit to one control panel

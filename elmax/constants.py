@@ -10,7 +10,7 @@ ENDPOINT_DISCOVERY = "api/ext/discovery"
 
 version = "0.1.0-test-client"
 
-USER_AGENT= f"PythonElmax/{version}"
+USER_AGENT = f"PythonElmax/{version}"
 
 COMMAND_ON = "on"
 COMMAND_OFF = "off"
