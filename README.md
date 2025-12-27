@@ -13,7 +13,7 @@ The package is available in the [Python Package Index](https://pypi.python.org/)
 $ pip3 install elmax --user
 ```
 
-For Nix or NixOS users is a package available. Keep in mind that the lastest
+For Nix or NixOS users is a package available. Keep in mind that the latest
 releases might only be present in the `unstable` channel.
 
 ```bash
