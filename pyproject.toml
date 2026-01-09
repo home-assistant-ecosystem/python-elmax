@@ -33,7 +33,7 @@ yarl = ">=1.7,<2"
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.8.1"
 black = "^25.12"
-pytest = "^6"
+pytest = "^8"
 pytest-httpx = "^0.14"
 pytest-asyncio = "^0.14"
 sphinx = "^3"
