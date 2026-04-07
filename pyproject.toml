@@ -19,14 +19,13 @@ classifiers = [
     "Environment :: Console",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Topic :: Home Automation"
 ]
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.13"
 httpx = ">=0.28,<1"
 yarl = ">=1.7,<2"
 
