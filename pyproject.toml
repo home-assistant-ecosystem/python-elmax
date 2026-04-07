@@ -28,7 +28,7 @@ python = "^3.13"
 httpx = ">=0.28,<1"
 yarl = ">=1.7,<2"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest-cov = "^2.8.1"
 black = "^25.12"
 pytest = "^9"
